@@ -4,8 +4,8 @@ from dots_infrastructure.DataClasses import TimeStepInformation, EsdlId
 from esdl import EnergyMarket, EnergySystem, DateTimeProfile
 import pandas as pd
 
-from MarketService.market_service_base import MarketServiceBase
-from MarketService.market_service_dataclasses import SendCurrentDayAheadPriceOutput
+from MarketModelService.market_service_base import MarketServiceBase
+from MarketModelService.market_service_dataclasses import SendCurrentDayAheadPriceOutput
 
 class MarketService(MarketServiceBase): 
 

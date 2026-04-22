@@ -1,6 +1,6 @@
 from datetime import datetime
 import unittest
-from MarketService.market_service import MarketService
+from MarketModelService.market_service import MarketService
 from dots_infrastructure.DataClasses import SimulatorConfiguration, TimeStepInformation
 from dots_infrastructure.test_infra.InfluxDBMock import InfluxDBMock
 from esdl.esdl_handler import EnergySystemHandler
