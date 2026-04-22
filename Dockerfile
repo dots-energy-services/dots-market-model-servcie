@@ -8,4 +8,4 @@ COPY pyproject.toml ./
 COPY README.md ./
 RUN pip install ./
 
-ENTRYPOINT python3 src/MarketService/market_service.py
+ENTRYPOINT ["python3", "src/MarketService/market_service.py"]

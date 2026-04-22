@@ -11,7 +11,7 @@ on:
   pull_request:
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: marketservice
+  IMAGE_NAME: marketmodelservice
 jobs:
   push:
     runs-on: ubuntu-latest
