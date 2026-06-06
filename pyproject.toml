@@ -3,24 +3,35 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "ExampleCalculationService"
+name = "EuphemiaMarketClearing"
 version = "0.0.1"
 authors = [
   { name="Example Author", email="author@example.com" },
 ]
-description = "A small example package"
+description = "EUPHEMIA-style multi-area day-ahead market clearing service for DOTS"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.12"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 dependencies = [
-  'helics==3.6.1',
-  'dots_infrastructure==1.0.9'
+  "helics==3.6.1",
+  "dots_infrastructure==1.0.9",
+  "pandas>=2.0",
+  "openpyxl>=3.1",
+  "pyomo>=6.7",
+  "highspy>=1.7",
 ]
 
 [project.urls]
 Homepage = "https://github.com/EES-TUe/Dots-calculation-service-template"
 Issues = "https://github.com/EES-TUe/Dots-calculation-service-template/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/EuphemiaMarketClearing"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["test"]

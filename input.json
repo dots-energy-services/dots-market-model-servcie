@@ -1,62 +1,36 @@
 {
-    "name": "test",
-    "esdl_type" : "EConnection",
-    "description" : "this is a test description",
-    "relevant_links" : [
+    "name": "MultiRegionMarket",
+    "esdl_type": "EnergySystem",
+    "description": "EUPHEMIA-style multi-area day-ahead market clearing. Each AggregatedConsumer (LV community) is a separate bidding area connected through MV cable constraints. Receives 24-hour community net positions and P2P clearing prices, constructs supply/demand bids per area, and clears the market via OPtimiseMultiRegion.",
+    "relevant_links": [],
+    "calculations": [
         {
-            "name" : "test link",
-            "url" : "https://example.com/test",
-            "description" : "this is a test link"
-        },
-        {
-            "name" : "another test link",
-            "url" : "https://example.com/anothertest",
-            "description" : "this is another link"
-        }
-    ],
-    "calculations" : [
-        {
-            "name": "test calculation",
-            "description" : "test",
-            "time_period_in_seconds" : 900,
-            "offset_in_seconds" : 0,
-            "inputs" : [
+            "name": "clear_market",
+            "description": "Collect community net position and price vectors from all AggregatedConsumers. Map each community to a EUPHEMIA area (LV1/LV2/LV3). Build supply bids (surplus at P2P price) and demand bids (deficit at P2P price). Add base grid supply from bundled market data. Run OPtimiseMultiRegion with MV cable interconnection constraints. Publish per-area MCP vectors.",
+            "time_period_in_seconds": 86400,
+            "offset_in_seconds": 0,
+            "inputs": [
                 {
-                    "name" : "input1",
-                    "esdl_type" : "PVInstallation",
-                    "data_type" : "DOUBLE",
-                    "description" : "input 1 description",
-                    "unit" : "K"
-                }
-            ],
-            "outputs" : [
-                {
-                    "name" : "output1",
-                    "data_type" : "DOUBLE",
-                    "description" : "output 1 description",
-                    "unit" : "W"
+                    "name": "community_net_vector",
+                    "esdl_type": "AggregatedConsumer",
+                    "data_type": "VECTOR",
+                    "description": "24-hour community net position after P2P clearing [kWh per hour, hours 0-23]. Positive = net export, negative = net import.",
+                    "unit": "kWh"
                 },
                 {
-                    "name" : "output2",
-                    "data_type" : "DOUBLE",
-                    "description" : "output 2 description",
-                    "unit" : "W"
+                    "name": "community_price_vector",
+                    "esdl_type": "AggregatedConsumer",
+                    "data_type": "VECTOR",
+                    "description": "24-hour community clearing price after P2P clearing [EUR/kWh, hours 0-23]. Used as the bid price for wholesale market participation.",
+                    "unit": "EUR/kWh"
                 }
-            ]
-        },
-        {
-            "name": "test calculation 2",
-            "description" : "test",
-            "time_period_in_seconds" : 900,
-            "offset_in_seconds" : 100,
-            "inputs" : [
             ],
-            "outputs" : [
+            "outputs": [
                 {
-                    "name" : "output3",
-                    "data_type" : "DOUBLE",
-                    "description" : "output 3 description",
-                    "unit" : "W"
+                    "name": "mcp_vector",
+                    "data_type": "VECTOR",
+                    "description": "Flat 24-element MCP vector per area [EUR/MWh]. Areas are sorted alphabetically: [LV1_h1..LV1_h24, LV2_h1..LV2_h24, LV3_h1..LV3_h24]. Length = n_areas * 24.",
+                    "unit": "EUR/MWh"
                 }
             ]
         }
